@@ -32,10 +32,11 @@ class App extends Component {
   }
   render() {
     const { topics } = this.state;
-    return <div className="App">
-        Hello World
-        {JSON.stringify(topics)}
+    return (
+      <div className="App">
+        <h1>Topics</h1>
       </div>
+    )
   };
 }
 
