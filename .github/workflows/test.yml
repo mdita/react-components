@@ -39,8 +39,14 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
     - name: Adding Known Hosts
-      run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts    
+      run: |
+        echo "::group::Adding Known Hosts"
+        ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+        echo "::endgroup::"
     - name: Try remove echo command
       run: ssh root@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} 'echo "test" >> $HOME/test.txt'
     - name: Copy build folder
-      run: rsync -arvz -e 'ssh -p ${{ secrets.SSH_PORT }}' ./build/ root@${{ secrets.SSH_HOST }}:/root/build/ 
+      run: |
+        echo "::group::Copy build folder"
+        rsync -arvz -e 'ssh -p ${{ secrets.SSH_PORT }}' ./build/ root@${{ secrets.SSH_HOST }}:/root/build/
+        echo "::endgroup::"
