@@ -17,9 +17,20 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16
-    - run: npm -v
-    - run: npm install
-    - run: npm run build
+    - name: Show NPM Version
+      run: npm -v
+    - name: Install app packages
+      run: |
+        echo "::group::Install app packages"
+        npm install
+        echo "::endgroup::"
+    - name: Build app
+      run: |
+        echo "::group::Build app"
+        set +e
+        npm run build
+        set -e
+        echo "::endgroup::"
     - name: RUN COMMAND
       run: echo "DEPLOY TO DEV"
     - name: Install SSH Key
