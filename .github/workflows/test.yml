@@ -42,3 +42,5 @@ jobs:
       run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts    
     - name: Try remove echo command
       run: ssh root@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} 'echo "test" >> $HOME/test.txt'
+    - name: Copy build folder
+      run: rsync -arvz -e 'ssh -p ${{ secrets.SSH_PORT }}' ./build/ root@${{ secrets.SSH_HOST }}:/root/build/ 
