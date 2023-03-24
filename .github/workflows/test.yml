@@ -43,11 +43,17 @@ jobs:
         echo "::group::Adding Known Hosts"
         ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
         echo "::endgroup::"
-    - name: Try remove echo command
-      run: ssh root@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} 'echo "test" >> $HOME/test.txt'
     - name: Copy build folder
       run: |
         echo "::group::Copy build folder"
         rsync -arvz -e 'ssh -p ${{ secrets.SSH_PORT }}' ./build/ root@${{ secrets.SSH_HOST }}:/root/build/
         rsync -arvz -e 'ssh -p ${{ secrets.SSH_PORT }}' Dockerfile root@${{ secrets.SSH_HOST }}:/root/Dockerfile
         echo "::endgroup::"
+    - name: Docker stop
+      run: ssh root@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "docker stop crmfrontend_test"
+    - name: Docker remove
+      run: ssh root@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "docker rm crmfrontend_test"  
+    - name: Docker build
+      run: ssh root@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "docker build -t crmfrontend_test ."
+    - name: Docker run
+      run: ssh root@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "docker run --name tobedeleted -dp 4000:3000 crmfrontend_test"  
