@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 # install serve - deployment static server suggested by official create-react-app
 RUN npm install -g serve
 
-EXPOSE 3000
+EXPOSE 4000
 
 # copy our build files from our builder stage
 COPY ./build ./build
