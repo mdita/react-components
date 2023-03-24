@@ -49,4 +49,5 @@ jobs:
       run: |
         echo "::group::Copy build folder"
         rsync -arvz -e 'ssh -p ${{ secrets.SSH_PORT }}' ./build/ root@${{ secrets.SSH_HOST }}:/root/build/
+        rsync -arvz -e 'ssh -p ${{ secrets.SSH_PORT }}' Dockerfile root@${{ secrets.SSH_HOST }}:/root/Dockerfile
         echo "::endgroup::"
