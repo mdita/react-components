@@ -2,10 +2,10 @@ name: Deploy to DEV
 on:
   push:
     branches:
-      - dev2
+      - master
   pull_request:
     branches:
-      - dev2
+      - master
 jobs:
   Deploy-to-DEV:
     runs-on: ubuntu-latest
