@@ -50,9 +50,9 @@ jobs:
         rsync -arvz -e 'ssh -p ${{ secrets.SSH_PORT }}' Dockerfile root@${{ secrets.SSH_HOST }}:/root/Dockerfile
         echo "::endgroup::"
     - name: Docker stop
-      run: ssh root@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "docker stop crmfrontend_test"
+      run: ssh root@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "docker stop tobedeleted"
     - name: Docker remove
-      run: ssh root@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "docker rm crmfrontend_test"  
+      run: ssh root@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "docker rm tobedeleted"  
     - name: Docker build
       run: ssh root@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "docker build -t crmfrontend_test ."
     - name: Docker run
