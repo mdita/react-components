@@ -47,8 +47,12 @@ jobs:
       run: |
         echo "::group::Copy build folder"
         rsync -arvz -e 'ssh -p ${{ secrets.SSH_PORT }}' ./build/ root@${{ secrets.SSH_HOST }}:/root/build/
-        rsync -arvz -e 'ssh -p ${{ secrets.SSH_PORT }}' Dockerfile root@${{ secrets.SSH_HOST }}:/root/Dockerfile
         echo "::endgroup::"
+    - name: Copy build folder
+      run: |
+        echo "::group::Copy Dockerfile"
+        rsync -arvz -e 'ssh -p ${{ secrets.SSH_PORT }}' Dockerfile root@${{ secrets.SSH_HOST }}:/root/Dockerfile
+        echo "::endgroup::"    
     - name: Docker stop
       run: ssh root@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} "docker stop tobedeleted"
     - name: Docker remove
